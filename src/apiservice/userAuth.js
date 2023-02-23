@@ -15,5 +15,18 @@ const userLogin = ({ success, fail, data }) => {
                 fail(err.response.data) 
         })
     }
-export default {userLogin}
+    const verifyUser = ({ success, fail, phone }) => {
+        axios.get(`user/userCheck?id=${phone}`)
+            .then((res) => {
+                console.log('Inside userAuth')
+                console.log(res.status == 200)
+                if (res.status == 200) {
+                    success(res)
+                            }
+            })
+            .catch((err) => {
+                    fail(err.response) 
+            })
+        }
+export default {userLogin,verifyUser}
 

@@ -1,21 +1,42 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LoginView from '@/pages/Login/LoginView.vue'
-import Dashbaord from '@/pages/Dashbaord/Dashbaord.vue'
+import Dashboard from '@/pages/Dashboard/Dashboard.vue'
+
 
 Vue.use(VueRouter)
+function guardMyroute(to, from, next)
+{
+ let isAuthenticated= false;
+ if(localStorage.getItem('isLogined',true)){
+  isAuthenticated = true;
+ }
+ else{
+  isAuthenticated= false;
+ }
+  if(isAuthenticated) 
+ {
+  next();
+ } 
+ else
+ {
+  next('/login');
+ }
+}
 
 const routes = [
-  {
-    path: '/',
-    name: 'dashbaord',
-    component:Dashbaord,
-  },
   {
     path: '/login',
     name: 'login',
     component:LoginView,
   },
+  {
+    path: "/",
+    name: "dashboard",
+    beforeEnter : guardMyroute,
+    meta: {title: 'Dashboard'},
+    component: Dashboard,
+  }
 //   {
 //     path: '/about',
 //     name: 'about',

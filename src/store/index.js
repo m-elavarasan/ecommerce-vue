@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userData:{},
+    userData:{}
   },
   getters: {
     userData: (state) => state.userData,
@@ -23,14 +23,35 @@ export default new Vuex.Store({
         data,
         success: (res) => {
           console.log(" AUTH_USER success")
+          localStorage.setItem('userData',JSON.stringify(res.data))
           commit("setUserData", res.data)
+          
           success(res.data)
         },
         fail: (err) => {
           fail(err)
+          localStorage.setItem("isLogined", false)
         }
       })
     },
+    VERIFY_USER({commit},phone)
+    {
+      userAuth.verifyUser({
+        phone,
+        success: (res) => {
+          console.log(" VERIFY_USER success")
+          localStorage.setItem('userData',JSON.stringify(res.data))
+          commit("setUserData", res.data)
+          localStorage.setItem("isLogined", true)
+        },
+        fail: (err) => {
+          console.log(err)
+          console.log("inside Fail");
+          localStorage.removeItem('isLogined')
+          window.location.reload()
+        }
+      })
+    }
 
   },
   modules: {
