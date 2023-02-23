@@ -18,15 +18,16 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    AUTH_USER({commit},{data}){
+    AUTH_USER({commit},{success,fail,data}){
     userAuth.userLogin({
         data,
-        success: (response) => {
+        success: (res) => {
           console.log(" AUTH_USER success")
-          commit("setUserData", response.data)
+          commit("setUserData", res.data)
+          success(res.data)
         },
-        fail: (error) => {
-          console.log(" AUTH_USER fail")
+        fail: (err) => {
+          fail(err)
         }
       })
     },

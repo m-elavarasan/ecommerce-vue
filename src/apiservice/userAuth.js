@@ -1,24 +1,19 @@
 import axios from 'axios'
 
-export default {
-   userLogin({ data,success,fail }){
+const userLogin = ({ success, fail, data }) => {
     axios.post(`user/authUser`, data)
-        .then((response) => {
+        .then((res) => {
             console.log('Inside userAuth')
-            console.log(response.status == 200)
-            if (response.status == 200) {
-                success(response)
+            console.log(res.status == 200)
+            if (res.status == 200) {
+                success(res)
                 console.log("success inside userauth")
-           }
-           else if (response.status >= 400 && response.status <= 499) {
-            fail(response.message)
         }
         })
-        .catch((error) => {
+        .catch((err) => {
             console.log('fail inside userauth')
-            fail(error)
-            console.log(error);
+                fail(err.response.data) 
         })
-}
+    }
+export default {userLogin}
 
-} 
