@@ -1,4 +1,4 @@
-# ecommerce
+# ecommerce-seller
 
 ## Project setup
 ```
